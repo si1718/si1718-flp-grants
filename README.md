@@ -1,6 +1,6 @@
 # si1718-flp-grants
 
-Grants searching microservice 
+Grants browser microservice 
 
 ## Getting Started
 
