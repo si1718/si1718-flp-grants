@@ -59,4 +59,4 @@ For the moment, it doesn't exists :O.
 
 ## Acknowledgments
 
-* Thanks to [PurpleBooth] (https://github.com//PurpleBooth) and contributors for this [awesome template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2#file-readme-template-md).
+* Thanks to [PurpleBooth](https://github.com//PurpleBooth) and contributors for this [awesome template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2#file-readme-template-md).
