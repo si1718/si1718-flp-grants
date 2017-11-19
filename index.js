@@ -51,14 +51,14 @@ app.get(BASE_API_PATH + '/grants', function(req, response) {
 
 // Get a single resource
 
-app.get(BASE_API_PATH + "/grants/:grantId", function (request, response) {
-    var grantId = request.params.grantId;
-    if (!grantId) {
-        console.log("WARNING: New GET request to /grants/:grantId without grantId, sending 400...");
+app.get(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
+    var idGrant = request.params.idGrant;
+    if (!idGrant) {
+        console.log("WARNING: New GET request to /grants/:idGrant without idGrant, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New GET request to /grants/" + grantId);
-        db.findOne({ "grantId": grantId }, function (err, grant) {
+        console.log("INFO: New GET request to /grants/" + idGrant);
+        db.findOne({ "idGrant": idGrant }, function (err, grant) {
             if (err) {
                 console.error('WARNING: Error getting data from DB');
                 response.sendStatus(500); // internal server error
@@ -68,7 +68,7 @@ app.get(BASE_API_PATH + "/grants/:grantId", function (request, response) {
                     console.log("INFO: Sending contact: " + JSON.stringify(grant, 2, null));
                     response.send(grant);
                 } else {
-                    console.log("WARNING: There are not any contact with grantId " + grantId);
+                    console.log("WARNING: There are not any contact with idGrant " + idGrant);
                     response.sendStatus(404); // not found
                 }
             }
@@ -93,9 +93,9 @@ app.post(BASE_API_PATH + '/grants', function(req, res) {
             res.sendStatus(422); // unprocessable entity
         }
         else {
-            var grantId = newGrant.reference.replace("/","-");
-            newGrant.grantId = grantId;
-            db.findOne({ "grantId": grantId }, function(err, element) {
+            var idGrant = newGrant.reference.replace("/","-").toLowerCase();
+            newGrant.idGrant = idGrant;
+            db.findOne({ "idGrant": idGrant }, function(err, element) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     res.sendStatus(500); // internal server error
@@ -126,9 +126,9 @@ app.post(BASE_API_PATH + '/grants', function(req, res) {
 });
 
 //POST over a single resource
-app.post(BASE_API_PATH + "/grants/:grantId", function (request, response) {
-    var grantId = request.params.grantId;
-    console.log("WARNING: New POST request to /contacts/" + grantId + ", sending 405...");
+app.post(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
+    var idGrant = request.params.idGrant;
+    console.log("WARNING: New POST request to /contacts/" + idGrant + ", sending 405...");
     response.sendStatus(405); // method not allowed
 });
 
@@ -143,21 +143,21 @@ app.put(BASE_API_PATH + "/grants", function (request, response) {
 
 
 //PUT over a single resource
-app.put(BASE_API_PATH + "/grants/:grantId", function (request, response) {
+app.put(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
     var updatedGrant = request.body;
-    var grantId = request.params.grantId;
+    var idGrant = request.params.idGrant;
     if (!updatedGrant) {
         console.log("WARNING: New PUT request to /contacts/ without contact, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New PUT request to /grants/" + grantId + " with data " + JSON.stringify(updatedGrant, 2, null));
+        console.log("INFO: New PUT request to /grants/" + idGrant + " with data " + JSON.stringify(updatedGrant, 2, null));
         if (!updatedGrant.title || !updatedGrant.leaders || !updatedGrant.teamMembers || 
             !updatedGrant.type || !updatedGrant.reference || !updatedGrant.startDate ||
             !updatedGrant.endDate || !updatedGrant.fundingOrganizations) {
             console.log("WARNING: The contact " + JSON.stringify(updatedGrant, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
-            db.findOne({"grantId":grantId}, function (err, grantToUpdate) {
+            db.findOne({"idGrant":idGrant}, function (err, grantToUpdate) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
@@ -165,12 +165,12 @@ app.put(BASE_API_PATH + "/grants/:grantId", function (request, response) {
                     
                     if (grantToUpdate) {
                         updatedGrant.reference = grantToUpdate.reference;
-                        db.update({"grantId":grantId}, updatedGrant);
+                        db.update({"idGrant":idGrant}, updatedGrant);
 
-                        console.log("INFO: Modifying contact with grantId " + grantId + " with data " + JSON.stringify(updatedGrant, 2, null));
+                        console.log("INFO: Modifying contact with idGrant " + idGrant + " with data " + JSON.stringify(updatedGrant, 2, null));
                         response.send(updatedGrant); // return the updated contact
                     } else {
-                        console.log("WARNING: There are not any contact with grantId " + grantId);
+                        console.log("WARNING: There are not any contact with idGrant " + idGrant);
                         response.sendStatus(404); // not found
                     }
                 }
@@ -199,21 +199,21 @@ app.delete(BASE_API_PATH + "/grants", function (request, response) {
 });
 
 //DELETE over a single resource
-app.delete(BASE_API_PATH + "/grants/:grantId", function (request, response) {
-    var grantId = request.params.grantId;
-    if (!grantId) {
-        console.log("WARNING: New DELETE request to /contacts/:grantId without grantId, sending 400...");
+app.delete(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
+    var idGrant = request.params.idGrant;
+    if (!idGrant) {
+        console.log("WARNING: New DELETE request to /contacts/:idGrant without idGrant, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New DELETE request to /contacts/" + grantId);
-        db.remove({"grantId": grantId}, {}, function (err, numRemoved) {
+        console.log("INFO: New DELETE request to /contacts/" + idGrant);
+        db.remove({"idGrant": idGrant}, {}, function (err, numRemoved) {
             if (err) {
                 console.error('WARNING: Error removing data from DB');
                 response.sendStatus(500); // internal server error
             } else {
                 console.log("INFO: Contacts removed: " + numRemoved.result.n);
                 if (numRemoved.result.n === 1) {
-                    console.log("INFO: The contact with grantId " + grantId + " has been succesfully deleted, sending 204...");
+                    console.log("INFO: The contact with idGrant " + idGrant + " has been succesfully deleted, sending 204...");
                     response.sendStatus(204); // no content
                 } else {
                     console.log("WARNING: There are no contacts to delete");
