@@ -152,7 +152,7 @@ app.put(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
     } else {
         console.log("INFO: New PUT request to /grants/" + idGrant + " with data " + JSON.stringify(updatedGrant, 2, null));
         if (!updatedGrant.title || !updatedGrant.leaders || !updatedGrant.teamMembers || 
-            !updatedGrant.type || !updatedGrant.reference || !updatedGrant.startDate ||
+            !updatedGrant.type || !updatedGrant.startDate ||
             !updatedGrant.endDate || !updatedGrant.fundingOrganizations) {
             console.log("WARNING: The contact " + JSON.stringify(updatedGrant, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
@@ -165,6 +165,7 @@ app.put(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
                     
                     if (grantToUpdate) {
                         updatedGrant.reference = grantToUpdate.reference;
+                        updatedGrant.idGrant = grantToUpdate.idGrant;
                         db.update({"idGrant":idGrant}, updatedGrant);
 
                         console.log("INFO: Modifying contact with idGrant " + idGrant + " with data " + JSON.stringify(updatedGrant, 2, null));
