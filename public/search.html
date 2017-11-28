@@ -1,0 +1,48 @@
+<h1 class="h1">Grants Browser</h1>
+
+<h3>Select an option to search:</h3>
+<h4>Service not allowed yet</h4>
+
+<form action="#">
+  <div>
+    <p>
+      <input name="group1" type="radio" id="s1" ng-click="setSearchField('title')"></input>
+      <label for="s1">By title</label>
+    </p>
+    <p>
+      <input name="group1" type="radio" id="s2" ng-click="setSearchField('reference')"/>
+      <label for="s2">By reference</label>
+    </p>
+    <p>
+      <input name="group1" type="radio" id="s3" ng-click="setSearchField('startDate')"/>
+      <label for="s3">By startDate</label>
+    </p>
+    <p>
+      <input class="with-gap" name="group1" type="radio" id="s4"  ng-click="setSearchField('endDate')"/>
+      <label for="s4">By endDate</label>
+    </p>
+    <p>
+      <input name="group1" type="radio" id="s5" ng-click="setSearchField('type')"/>
+      <label for="s5">By type</label>
+    </p>
+    <p>
+      <input name="group1" type="radio" id="s6" ng-click="setSearchField('teamMembers')"/>
+      <label for="s6">By a team member</label>
+    </p>
+    <p>
+      <input name="group1" type="radio" id="s7" ng-click="setSearchField('leaders')"/>
+      <label for="s7">By a leader</label>
+    </p>
+    <p>
+      <input class="with-gap" name="group1" type="radio" id="s8"  ng-click="setSearchField('fundingOrganizations')"/>
+      <label for="s8">By a funding organization</label>
+    </p>
+    
+    <label for="grantInput">Search</label>
+    <input class="form-control" type="text" id="grantInput" ng-model="searchValue" autofocus>
+    </div>
+    
+    <button type="submit" class="btn blue" ng-click="searchWithFilter()">Search</button>
+    
+    <button type="submit" class="btn blue" ng-click="goToAllGrants()">Go to full grant list</button>
+</form>

@@ -1,0 +1,87 @@
+<h2>Create Grant</h2>
+<form>
+    <div class="input-field">
+        <label for="grantInputTitle">Grant title:</label>
+        <input class="form-control" type="text" id="grantInputTitle" ng-model="newGrant.title">
+    </div>
+    
+    <div class="input-field">
+        <label for="grantInputReference">Reference:</label>
+        <input class="form-control" type="text" id="grantInputReference" ng-model="newGrant.reference">
+    </div>
+    
+    <div class="input-field" style="padding: 15px 0">
+        <h6>Leaders</h6>
+        <ul id="leadersContainer" class="collection" >
+            <li class="collection-item" ng-repeat="leader in newGrant.leaders track by $index">
+                <div><b>Leader {{$index + 1}}:</b> {{leader}}
+                    <a class="secondary-content" ng-click="deleteResourceItem('leader', $index)">
+                    <i style="cursor:pointer; color:red" class="material-icons">clear</i></a>
+                </div>
+            </li>
+        </ul>
+    
+        <div class="input-field">
+            <label for="grantInputLeader">New leader:</label>
+            <input type="text" id="grantInputLeader">
+            <a class="waves-effect waves-light btn green" ng-click="addAttributeItem('leader')"><i class="material-icons left">add_circle</i>Add</a>
+        </div>
+    </div>
+    
+    <div class="input-field">
+        <label for="grantInputType">Grant type:</label>
+        <input class="form-control" type="text" id="grantInputType" ng-model="newGrant.type">
+    </div>
+
+    <div class="input-field">
+        <label for="grantInputStartDate">Start date:</label>
+        <input class="form-control" type="text" id="grantInputStartDate" ng-model="newGrant.startDate">
+    </div>
+    
+    <div class="input-field">
+        <label for="grantInputEndDate">End date:</label>
+        <input class="form-control" type="text" id="grantInputEndDate" ng-model="newGrant.endDate">
+    </div>
+    
+    <div class="input-field" style="padding: 15px 0">
+        <h6>Funding Organizations</h6>
+        <ul id="fundingOrganizationsContainer" class="collection" >
+            <li class="collection-item" ng-repeat="fundingOrganization in newGrant.fundingOrganizations track by $index">
+                <div><b>Funding organization {{$index + 1}}:</b> {{fundingOrganization}}
+                    <a class="secondary-content" ng-click="deleteResourceItem('fundingOrganization', $index)">
+                    <i style="cursor:pointer; color:red" class="material-icons">clear</i></a>
+                </div>
+            </li>
+        </ul>
+    
+        <div class="input-field">
+            <label for="grantInputFundingOrganization">New funding organization:</label>
+            <input type="text" id="grantInputFundingOrganization">
+            <a class="waves-effect waves-light btn green" ng-click="addAttributeItem('fundingOrganization')"><i class="material-icons left">add_circle</i>Add</a>
+        </div>
+    </div>
+    
+    <div class="input-field" style="padding: 15px 0">
+        <h6>Team members:</h6>
+        <ul id="teamMembersContainer" class="collection">
+            <li class="collection-item" ng-repeat="teamMember in newGrant.teamMembers track by $index">
+                <div><b>Team member {{$index + 1}}:</b>{{teamMember}} 
+                    <a class="secondary-content" ng-click="deleteResourceItem('teamMember', $index)">
+                    <i style="cursor:pointer; color:red" class="material-icons">clear</i></a>
+                </div>
+            </li>
+        </ul>
+        
+        <div class="input-field">
+            <label for="grantInputTeamMember">New team member</label>
+            <input type="text" id="grantInputTeamMember">
+            <a class="waves-effect waves-light btn green" ng-click="addAttributeItem('teamMember')"><i class="material-icons left">add_circle</i>Add</a>
+        </div>
+    </div>
+    
+    <button class="btn red" ng-click="cancelGrantCreation()">Cancel</button>
+    <button type="submit" class="btn blue" ng-click="commitGrantCreation()">Create</button>
+    
+    <label id="info"></label>
+</form>
+
