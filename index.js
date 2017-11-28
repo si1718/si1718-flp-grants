@@ -87,7 +87,7 @@ app.get(BASE_API_PATH + '/grants', function(req, response) {
             response.sendStatus(400); // bad request
         } else {
             console.log("INFO: New GET request to /grants/");
-            db.find({resourceRequested : {"$regex" : ".*"+ valueRequested +".*"}}).toArray(function (err, grants) {
+            db.find({ resourceRequested : valueRequested}).toArray(function (err, grants) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error

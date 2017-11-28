@@ -5,15 +5,7 @@ angular.module("GrantManagerApp")
         $scope.searchField = "";
         
         $scope.searchWithFilter = function(){
-            $http
-                .get("/api/v1/grants" + $scope.idGrant)
-                .then(
-                    function(response){
-                        $scope.updatedGrant = response.data;
-                    },function(response){
-                        $scope.grantExists = false;
-                    }
-                );
+            $location.path("/list?" + $scope.searchField + "=" + $scope.searchValue);
         }
         
         $scope.setSearchField = function(idField){
