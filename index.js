@@ -40,18 +40,71 @@ app.use(helmet());
 
 // Get a collection
 app.get(BASE_API_PATH + '/grants', function(req, response) {
-    
     console.log("INFO: New GET request to /grants");
-    db.find({}).toArray( function (err, grants) {
-        if (err) {
-            console.error('WARNING: Error getting data from DB');
-            response.sendStatus(500); // internal server error
+    if(!Object.keys(req.query).length){
+        db.find({}).toArray(function (err, grants) {
+            if (err) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            } else {
+                console.log("INFO: Sending grants: " + JSON.stringify(grants, 2, null));
+                response.send(grants);
+            }
+        });
+    }else{
+        var resourceRequested = "";
+        var valueRequested = "";
+        
+        if(req.query.title){
+            resourceRequested = "title";
+            valueRequested = req.query.title;
+            
+        }else if(req.query.reference){
+            resourceRequested = "reference";
+            valueRequested = req.query.reference;
+        }else if(req.query.startDate){
+            resourceRequested = "startDate";
+            valueRequested = req.query.startDate;
+        }else if(req.query.endDate){
+            resourceRequested = "endDate";
+            valueRequested = req.query.endDate;
+        }else if(req.query.type){
+            resourceRequested = "type";
+            valueRequested = req.query.req.query.type;
+        }else if(req.query.fundingOrganizations){
+            resourceRequested = "fundingOrganizations";
+            valueRequested = req.query.fundingOrganizations;
+        }else if(req.query.leaders){
+            resourceRequested = "leaders";
+            valueRequested = req.query.leaders;
+        }else if(req.query.teamMembers){
+            resourceRequested = "teamMembers";
+            valueRequested = req.query.teamMembers;
+        } 
+        
+        if (resourceRequested =="") {
+            console.log("WARNING: New GET request to /grants/:idGrant without idGrant, sending 400...");
+            response.sendStatus(400); // bad request
         } else {
-            console.log("INFO: Sending grants: " + JSON.stringify(grants, 2, null));
-            response.send(grants);
+            console.log("INFO: New GET request to /grants/");
+            db.find({resourceRequested : {"$regex" : ".*"+ valueRequested +".*"}}).toArray(function (err, grants) {
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    response.sendStatus(500); // internal server error
+                } else {
+                   
+                    if (grants) {
+                        console.log("INFO: Sending contact: " + JSON.stringify(grants, 2, null));
+                        response.send(grants);
+                    } else {
+                        console.log("WARNING: There are not any match grant");
+                        response.sendStatus(404); // not found
+                    }
+                }
+            });
         }
-    });
-
+    }
+    
 });
 
 // Get a single resource
@@ -80,7 +133,6 @@ app.get(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
         });
     }
 });
-
 
 
 app.post(BASE_API_PATH + '/grants', function(req, res) {
