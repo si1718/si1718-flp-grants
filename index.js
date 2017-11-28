@@ -1,7 +1,8 @@
 var express = require("express");
 var bodyParser = require('body-parser');
 var MongoClient = require("mongodb").MongoClient;
-
+var helmet = require("helmet");
+var path = require("path");
 
 var mdbURL = "mongodb://curro:curro@ds149855.mlab.com:49855/si1718-flp-grants";
 
@@ -29,7 +30,11 @@ MongoClient.connect(mdbURL,{native_parser:true}, (err, database) => {
 
 var app = express();
 
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use(bodyParser.json());
+app.use(helmet());
+
 
 /* GET METHODS*/
 

@@ -1,18 +1,81 @@
-<!DOCTYPE html>
-<html>
+<html ng-app="GrantManagerApp">
+    <!--<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/css" />
+    -->
     
+    <link rel="stylesheet" href="/bower_components/materialize/dist/css/materialize.min.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <!--
     <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    -->
     <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-route/angular-route.min.js"></script>
+    
+    <script type="text/javascript" src="/bower_components/materialize/dist/js/materialize.min.js"></script>
+    
+    <script type="text/javascript" src="grant-manager-app.js"></script>
+    <script type="text/javascript" src="search-ctrl.js"></script>
+    <script type="text/javascript" src="about-ctrl.js"></script>
+    <script type="text/javascript" src="list-ctrl.js"></script>
+    <script type="text/javascript" src="edit-ctrl.js"></script>
+    <script type="text/javascript" src="create-ctrl.js"></script>
+
     
     <head>
-        <title>Grants Browser Main Page</title>
+        <title>SISIUS 2.0 Grants API</title>
+        <style>
+            .container{
+                width: 80%;
+                margin:0 auto;
+            }
+            body {
+                display: flex;
+                min-height: 100vh;
+                flex-direction: column;
+            }
+            
+            main {
+                flex: 1 0 auto;
+            }
+        </style>
     </head>
+
     <body>
-        <h1> Wellcome to grant API</h1>
-        <p> You can access to API information by this <a href="./v1/api/grants">link</a></p>
-        <p> You can consult the <a href="https://documenter.getpostman.com/view/1102590/si1718-flp-grants-requestset-heroku/7EABaph">api document</a> for more information</p>
+        
+        <header><nav><div class= "container">
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo">SISIUS 2.0</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#!">Search</a></li>
+                    <li><a href="#!/create">New grant</a></li>
+                    <li><a href="#!/about">About</a></li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a><h4 class="red-text text-lighten-2" >Menu</h4></a></li>
+                    <li><a href="#!">Search</a></li>
+                    <li><a href="#!/create">New grant</a></li>
+                    <li><a href="#!/about">About</a></li>
+                </ul>
+                
+            </div>
+        </div></nav></header>
+        
+        <main><div class= "container">
+            <div ng-view></div>
+        </div></main>
+        
+        <footer class="page-footer">
+          <div class="footer-copyright">
+            <div class="container">
+            © 2017 
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+        </footer>
+        <script>$( document ).ready(function(){$(".button-collapse").sideNav();})</script>
     </body>
+
 </html>

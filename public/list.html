@@ -1,0 +1,44 @@
+<h2>Grants</h2>
+
+<table class="highlight">
+    <thead>
+        <tr>
+            <th>Reference</th>
+            <th>Title</th>
+            <th>Main Leader</th>
+            <th>Start date</th>
+            <th>Membership</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <tr ng-repeat="grant in grants" ng-click="showGrant(grant)">
+            <td>{{grant.reference}}</td>
+            <td>{{grant.title}}</td>
+            <td>{{grant.leaders[0]}}</td>
+            <td>{{grant.startDate}}</td>
+            <td>{{grant.teamMembers.length}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<button class="btn blue" id="createGrant" ng-click="createGrant()">New</button>
+
+<div id="grantInfo" style="background:WhiteSmoke; padding:2px; margin:20px 0" ng-show="isGrantInfoDisplayed">
+    <h4 class="h4" id ="title" style="font-weight: bold"></h4>
+    <p id="reference"></p>
+    <p id="leadersTitle"><b>Leaders:</b></p>
+    <ul id="leaders"></ul>
+    <p id="grantType"> </p>
+    <p id="startDate"></p>
+    <p id="endDate"></p>
+    <p id="fundingOrganizationsTitle"><b>Funding Organizations:</b></p>
+    <ul id="fundingOrganizations"></ul>
+    <p id="teamTitle"><b>Team:</b></p>
+    <ul id="teamMembers"></ul>
+</div>
+
+<div id="grantOptions" style="padding:3px; text-align:right" ng-show="isGrantInfoDisplayed">
+    <button class="btn blue" id="editGrant" ng-click="editGrant()">Edit</button>
+    <button class="btn red" id="deleteGrant" ng-click="deleteGrant()">Delete</button>
+</div>
