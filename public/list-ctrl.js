@@ -1,9 +1,12 @@
 angular.module("GrantManagerApp")
-    .controller("ListCtrl", ["$scope", "$http", "$location", function($scope, $http, $location){
-        
+    .controller("ListCtrl", ["$scope", "$http", "$location", "$routeParams",function($scope, $http, $location, $routeParams){
+        $scope.queryParam = $routeParams.queryParam;
+        $scope.queryValue = $routeParams.queryValue;
+
         function refresh(){
+            
             $http
-                .get("/api/v1/grants")
+                .get("/api/v1/grants?"+ $scope.queryParam + "=" + $scope.queryValue)
                 .then(function(response){
                     $scope.grants = response.data;
                 });

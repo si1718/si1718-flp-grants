@@ -52,42 +52,64 @@ app.get(BASE_API_PATH + '/grants', function(req, response) {
             }
         });
     }else{
-        var resourceRequested = "";
-        var valueRequested = "";
+        var query;
+        var hasParam = true;
+        // if(req.query.title){
+        //     resourceRequested = "title";
+        //     valueRequested = req.query.title;
+        // }else if(req.query.reference){
+        //     resourceRequested = "reference";
+        //     valueRequested = req.query.reference;
+        // }else if(req.query.startDate){
+        //     resourceRequested = "startDate";
+        //     valueRequested = req.query.startDate;
+        // }else if(req.query.endDate){
+        //     resourceRequested = "endDate";
+        //     valueRequested = req.query.endDate;
+        // }else if(req.query.type){
+        //     resourceRequested = "type";
+        //     valueRequested = req.query.req.query.type;
+        // }else if(req.query.fundingOrganizations){
+        //     resourceRequested = "fundingOrganizations";
+        //     valueRequested = req.query.fundingOrganizations;
+        // }else if(req.query.leaders){
+        //     resourceRequested = "leaders";
+        //     valueRequested = req.query.leaders;
+        // }else if(req.query.teamMembers){
+        //     resourceRequested = "teamMembers";
+        //     valueRequested = req.query.teamMembers;
+        // } 
         
         if(req.query.title){
-            resourceRequested = "title";
-            valueRequested = req.query.title;
-            
+            query = {'title' : {'$regex' : '.*' + req.query.title + '.*'}}
         }else if(req.query.reference){
-            resourceRequested = "reference";
-            valueRequested = req.query.reference;
+            query = {'reference' : {'$regex' : '.*' + req.query.reference + '.*'}}
         }else if(req.query.startDate){
-            resourceRequested = "startDate";
-            valueRequested = req.query.startDate;
+            query = {'startDate' : {'$regex' : '.*' + req.query.startDate + '.*'}}
         }else if(req.query.endDate){
-            resourceRequested = "endDate";
-            valueRequested = req.query.endDate;
+            query = {'endDate' : {'$regex' : '.*' + req.query.endDate + '.*'}}
         }else if(req.query.type){
-            resourceRequested = "type";
-            valueRequested = req.query.req.query.type;
+            query = {'type' : {'$regex' : '.*' + req.query.type + '.*'}}
         }else if(req.query.fundingOrganizations){
-            resourceRequested = "fundingOrganizations";
-            valueRequested = req.query.fundingOrganizations;
+            query = {'fundingOrganizations' : {'$regex' : '.*' + req.query.fundingOrganizations + '.*'}}
         }else if(req.query.leaders){
-            resourceRequested = "leaders";
-            valueRequested = req.query.leaders;
+            query = {'leaders' : {'$regex' : '.*' + req.query.leaders + '.*'}}
         }else if(req.query.teamMembers){
-            resourceRequested = "teamMembers";
-            valueRequested = req.query.teamMembers;
-        } 
+            query = {'teamMembers' : {'$regex' : '.*' + req.query.teamMembers + '.*'}}
+        }else{
+            hasParam = false;
+        }
         
-        if (resourceRequested =="") {
+        
+        if (!hasParam) {
             console.log("WARNING: New GET request to /grants/:idGrant without idGrant, sending 400...");
             response.sendStatus(400); // bad request
         } else {
             console.log("INFO: New GET request to /grants/");
-            db.find({ resourceRequested : valueRequested}).toArray(function (err, grants) {
+            
+            console.log(query);
+            
+            db.find(query).toArray(function (err, grants) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error

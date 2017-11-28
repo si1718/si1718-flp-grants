@@ -5,7 +5,7 @@ angular.module("GrantManagerApp")
         $scope.searchField = "";
         
         $scope.searchWithFilter = function(){
-            $location.path("/list?" + $scope.searchField + "=" + $scope.searchValue);
+            $location.path("/list/" + $scope.searchField + "/" + $scope.searchValue);
         }
         
         $scope.setSearchField = function(idField){

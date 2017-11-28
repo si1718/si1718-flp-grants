@@ -2,40 +2,32 @@
 
 <h3>Select an option to search:</h3>
 
-<form action="#">
+<form>
   <div>
-    <p>
-      <input  type="radio" id="s1" ng-click="setSearchField('title')"></input>
-      <label for="s1">By title</label>
-    </p>
-    <p>
-      <input  type="radio" id="s2" ng-click="setSearchField('reference')"/>
-      <label for="s2">By reference</label>
-    </p>
-    <p>
-      <input  type="radio" id="s3" ng-click="setSearchField('startDate')"/>
-      <label for="s3">By startDate</label>
-    </p>
-    <p>
-      <input class="with-gap"  type="radio" id="s4"  ng-click="setSearchField('endDate')"/>
-      <label for="s4">By endDate</label>
-    </p>
-    <p>
-      <input  type="radio" id="s5" ng-click="setSearchField('type')"/>
-      <label for="s5">By type</label>
-    </p>
-    <p>
-      <input  type="radio" id="s6" ng-click="setSearchField('teamMembers')"/>
-      <label for="s6">By a team member</label>
-    </p>
-    <p>
-      <input  type="radio" id="s7" ng-click="setSearchField('leaders')"/>
-      <label for="s7">By a leader</label>
-    </p>
-    <p>
-      <input class="with-gap"  type="radio" id="s8"  ng-click="setSearchField('fundingOrganizations')"/>
-      <label for="s8">By a funding organization</label>
-    </p>
+    <div class="radio">
+      <label for="s1" ><input name="radioGroup1" type="radio" id="s1" ng-click="setSearchField('title')">By title</label>
+    </div>
+    <div class="radio">
+      <label for="s2"><input name="radioGroup1" type="radio" id="s2" ng-click="setSearchField('reference')">By reference</label>
+    </div>
+    <div class="radio">
+      <label for="s3"><input name="radioGroup1" type="radio" id="s3" ng-click="setSearchField('startDate')">By startDate</label>
+    </div>
+    <div class="radio">
+      <label for="s4"><input name="radioGroup1" type="radio" id="s4"  ng-click="setSearchField('endDate')">By endDate</label>
+    </div>
+    <div class="radio">
+      <label for="s5"><input name="radioGroup1" type="radio" id="s5" ng-click="setSearchField('type')">By type</label>
+    </div>
+    <div class="radio">
+      <label for="s6"><input name="radioGroup1" type="radio" id="s6" ng-click="setSearchField('teamMembers')">By a team member</label>
+    </div>
+    <div class="radio">
+      <label for="s7"><input name="radioGroup1" type="radio" id="s7" ng-click="setSearchField('leaders')">By a leader</label>
+    </div>
+    <div class="radio">
+      <label for="s8"><input class="with-gap"  type="radio" id="s8" ng-click="setSearchField('fundingOrganizations')">By a funding organization</label>
+    </div>
     
     <label for="grantInput">Search</label>
     <input class="form-control" type="text" id="grantInput" ng-model="searchValue" autofocus>

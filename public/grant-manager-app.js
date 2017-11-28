@@ -10,7 +10,7 @@ angular.module("GrantManagerApp", ["ngRoute"])
             }).when("/grant/:idGrant",{
                 templateUrl: "edit.html",
                 controller : "EditCtrl"
-            }).when("/list?:query",{
+            }).when("/list/:queryParam/:queryValue",{
                 templateUrl:"list.html",
                 controller:"ListCtrl"
             }).when("/about",{
