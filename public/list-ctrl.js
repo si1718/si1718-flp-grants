@@ -1,15 +1,22 @@
 angular.module("GrantManagerApp")
     .controller("ListCtrl", ["$scope", "$http", "$location", "$routeParams",function($scope, $http, $location, $routeParams){
-        $scope.queryParam = $routeParams.queryParam;
-        $scope.queryValue = $routeParams.queryValue;
-
+        
+        $scope.grantExists = true;
+        
+        var queryParam = Object.keys($location.search())[0];
+        console.log(queryParam);
+        var queryValue = $location.search()[queryParam];
+         console.log(queryValue);
         function refresh(){
-            
             $http
-                .get("/api/v1/grants?"+ $scope.queryParam + "=" + $scope.queryValue)
-                .then(function(response){
-                    $scope.grants = response.data;
-                });
+                .get("/api/v1/grants?"+ queryParam + "=" + queryValue)
+                .then(
+                    function(response){
+                        $scope.grants = response.data;
+                    }, function(response){
+                        $scope.grantExists = false;
+                    }
+                );
             $scope.isGrantInfoDisplayed = false;
             $scope.grantId="";
         }

@@ -54,31 +54,6 @@ app.get(BASE_API_PATH + '/grants', function(req, response) {
     }else{
         var query;
         var hasParam = true;
-        // if(req.query.title){
-        //     resourceRequested = "title";
-        //     valueRequested = req.query.title;
-        // }else if(req.query.reference){
-        //     resourceRequested = "reference";
-        //     valueRequested = req.query.reference;
-        // }else if(req.query.startDate){
-        //     resourceRequested = "startDate";
-        //     valueRequested = req.query.startDate;
-        // }else if(req.query.endDate){
-        //     resourceRequested = "endDate";
-        //     valueRequested = req.query.endDate;
-        // }else if(req.query.type){
-        //     resourceRequested = "type";
-        //     valueRequested = req.query.req.query.type;
-        // }else if(req.query.fundingOrganizations){
-        //     resourceRequested = "fundingOrganizations";
-        //     valueRequested = req.query.fundingOrganizations;
-        // }else if(req.query.leaders){
-        //     resourceRequested = "leaders";
-        //     valueRequested = req.query.leaders;
-        // }else if(req.query.teamMembers){
-        //     resourceRequested = "teamMembers";
-        //     valueRequested = req.query.teamMembers;
-        // } 
         
         if(req.query.title){
             query = {'title' : {'$regex' : '.*' + req.query.title + '.*'}}
@@ -156,6 +131,7 @@ app.get(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
     }
 });
 
+/* POST METHODS*/
 
 app.post(BASE_API_PATH + '/grants', function(req, res) {
     var newGrant = req.body;
@@ -211,15 +187,13 @@ app.post(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
     response.sendStatus(405); // method not allowed
 });
 
+/* PUT METHODS*/
 
 //PUT over a collection
 app.put(BASE_API_PATH + "/grants", function (request, response) {
     console.log("WARNING: New PUT request to /contacts, sending 405...");
     response.sendStatus(405); // method not allowed
 });
-
-
-
 
 //PUT over a single resource
 app.put(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
@@ -258,6 +232,9 @@ app.put(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
         }
     }
 });
+
+
+/* DELETE METHODS*/
 
 //DELETE over a collection
 app.delete(BASE_API_PATH + "/grants", function (request, response) {

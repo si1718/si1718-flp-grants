@@ -44,38 +44,25 @@
 
     <body>
         
-        <header><nav><div class= "container">
-            <div class="nav-wrapper">
-                <a href="#!" class="brand-logo">SISIUS 2.0</a>
-                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="#!">Search</a></li>
-                    <li><a href="#!/create">New grant</a></li>
-                    <li><a href="#!/about">About</a></li>
-                </ul>
-                <ul class="side-nav" id="mobile-demo">
-                    <li><a><h4 class="red-text text-lighten-2" >Menu</h4></a></li>
-                    <li><a href="#!">Search</a></li>
-                    <li><a href="#!/create">New grant</a></li>
-                    <li><a href="#!/about">About</a></li>
-                </ul>
-                
-            </div>
-        </div></nav></header>
+        <header>
+            <nav  class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="#!" class="navbar-brand">SISIUS 2.0</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#!">Search</a></li>
+                        <li><a href="#!/create">New grant</a></li>
+                        <li><a href="#!/about">About</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
         
         <main><div class= "container">
             <div ng-view></div>
         </div></main>
         
-        <footer class="page-footer">
-          <div class="footer-copyright">
-            <div class="container">
-            © 2017 
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-            </div>
-          </div>
-        </footer>
-        <script>$( document ).ready(function(){$(".button-collapse").sideNav();})</script>
     </body>
 
 </html>

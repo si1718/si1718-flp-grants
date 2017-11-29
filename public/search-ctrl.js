@@ -1,11 +1,12 @@
 angular.module("GrantManagerApp")
    .controller("SearchCtrl", ["$scope", "$http", "$location", function($scope, $http, $location) {
-       
+        
+        $scope.searchField = "title";
         $scope.searchValue = "";
-        $scope.searchField = "";
+        
         
         $scope.searchWithFilter = function(){
-            $location.path("/list/" + $scope.searchField + "/" + $scope.searchValue);
+            $location.path("/list").search($scope.searchField, $scope.searchValue);
         }
         
         $scope.setSearchField = function(idField){
