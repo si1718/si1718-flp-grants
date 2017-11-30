@@ -3,6 +3,8 @@ var bodyParser = require('body-parser');
 var MongoClient = require("mongodb").MongoClient;
 var helmet = require("helmet");
 var path = require("path");
+var cors = require("cors");
+
 
 var mdbURL = "mongodb://curro:curro@ds149855.mlab.com:49855/si1718-flp-grants";
 
@@ -35,6 +37,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(helmet());
 
+app.use(cors);
 
 /* GET METHODS*/
 

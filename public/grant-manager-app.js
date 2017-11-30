@@ -16,6 +16,9 @@ angular.module("GrantManagerApp", ["ngRoute"])
             }).when("/about",{
                 templateUrl:"about.html",
                 controller:"AboutCtrl"
+            }).when("/analytics",{
+                templateUrl: "analytics.html",
+                controller: "AnalyticsCtrl"
             });
         console.log("App Initialized");
     });

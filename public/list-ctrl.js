@@ -6,13 +6,22 @@ angular.module("GrantManagerApp")
         var queryParam = Object.keys($location.search())[0];
         console.log(queryParam);
         var queryValue = $location.search()[queryParam];
-         console.log(queryValue);
+        
+        console.log(queryValue);
+        
         function refresh(){
+            var apiGetRequest = "/api/v1/grants";
+            if(queryParam)
+                apiGetRequest = apiGetRequest + "?"+ queryParam + "=" + queryValue;
             $http
-                .get("/api/v1/grants?"+ queryParam + "=" + queryValue)
+                .get(apiGetRequest)
                 .then(
                     function(response){
-                        $scope.grants = response.data;
+                        if(!$scope.grants)
+                            $scope.grantExists = false;
+                        else
+                            $scope.grants = response.data;
+                        console.log($scope.grants)
                     }, function(response){
                         $scope.grantExists = false;
                     }
