@@ -16,5 +16,20 @@ angular.module("GrantManagerApp")
         $scope.goToAllGrants = function(){
             $location.path("/list");
         }
+        
+        $scope.searchWithFilter = function(searchField) {
+            $http.get("https://si1718-flp-grants.herokuapp.com/#!/")
+                .then(
+                    function(response){
+                        if(response.data.length == 0)
+                            $scope.grantExists = false;
+                        else
+                            $scope.grants = response.data;
+                        console.log($scope.grants)
+                    }, function(response){
+                        $scope.grantExists = false;
+                    }
+                );
+        }
 
 }]);

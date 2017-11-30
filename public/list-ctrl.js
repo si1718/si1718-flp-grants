@@ -17,7 +17,7 @@ angular.module("GrantManagerApp")
                 .get(apiGetRequest)
                 .then(
                     function(response){
-                        if(!$scope.grants)
+                        if(response.data.length == 0)
                             $scope.grantExists = false;
                         else
                             $scope.grants = response.data;

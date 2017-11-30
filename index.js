@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(helmet());
 
-app.use(cors);
+app.use(cors());
 
 /* GET METHODS*/
 
