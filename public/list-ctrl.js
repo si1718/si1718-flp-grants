@@ -70,5 +70,4 @@ angular.module("GrantManagerApp")
 
         refresh();
         
-        
 }]);
