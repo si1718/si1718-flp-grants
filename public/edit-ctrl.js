@@ -44,13 +44,14 @@ angular.module("GrantManagerApp")
             };
             
             $scope.addAttributeItem = function(attribute){
+                console.log(attribute);
                 switch(attribute){
                     case "leader":
                         $scope.updatedGrant.leaders.push(urlLeader);
                         if($scope.updatedGrant.leadersName !== undefined)
-                            $scope.updatedGrant.leadersName.push($scope.grantInputLeader)
+                            $scope.updatedGrant.leadersName.push($scope.grantInputLeader);
                         else
-                            $scope.updatedGrant.leadersName = [$scope.grantInputLeader]
+                            $scope.updatedGrant.leadersName = [$scope.grantInputLeader];
                             
                         $scope.grantInputLeader = "";
                         $scope.validResearchersApiResponseForLeaderSearch = false;
@@ -60,12 +61,11 @@ angular.module("GrantManagerApp")
                         $scope.grantInputFundingOrganization = "";
                         break;
                     case "teamMember":
-                        $scope.updatedGrant.leaders.push(urlTeamMember);
-                        $scope.updatedGrant.teamMembers.push($scope.grantInputTeamMember);
+                        $scope.updatedGrant.teamMembers.push(urlTeamMember);
                         if($scope.updatedGrant.teamMembersName !== undefined)
-                            $scope.updatedGrant.teamMembersName.push($scope.grantInputTeamMember)
+                            $scope.updatedGrant.teamMembersName.push($scope.grantInputTeamMember);
                         else
-                            $scope.updatedGrant.leadersName = [$scope.grantInputLeader]
+                            $scope.updatedGrant.teamMembersName = [$scope.grantInputTeamMember];
                         $scope.grantInputTeamMember = "";
                         $scope.validResearchersApiResponseForTeamMemberSearch = false;
                         break;
@@ -79,12 +79,14 @@ angular.module("GrantManagerApp")
                 switch(attribute){
                     case "leader":
                         $scope.updatedGrant.leaders.splice(index,1);
+                        $scope.updatedGrant.leadersName.splice(index,1);
                         break;
                     case "fundingOrganization":
                         $scope.updatedGrant.fundingOrganizations.splice(index,1);
                         break;
                     case "teamMember":
                         $scope.updatedGrant.teamMembers.splice(index,1);
+                        $scope.updatedGrant.teamMembersName.splice(index,1);
                         break;
                     default:
                         break;
@@ -133,23 +135,44 @@ angular.module("GrantManagerApp")
             }
             
             $scope.checkResearcher = function(idInput){
-                var searchFragment = document.getElementById("grantInputLeader").value;
+                var searchFragment = getFragmentFromInput(idInput);
                 var apiCallQuery = researchersUrlBase + "?search=" + searchFragment;
                 console.log(apiCallQuery);
                 $http
                     .get(apiCallQuery)
                     .then(function(response){
-                        console.log("The first research output is: " + response.data[0].orcid);
-                        showError(idInput, "");
-                        insertResultInInput(idInput, response.data[0].name);
-                        saveUrlTemporally(idInput, researchersUrlBase + "/" + response.data[0].idResearcher)
-                        enableInsertButton(idInput);
+                        if(response.data.length !=0){
+                            console.log("The first research output is: " + response.data[0].orcid);
+                            showError(idInput, "");
+                            insertResultInInput(idInput, response.data[0].name);
+                            saveUrlTemporally(idInput, researchersUrlBase + "/" + response.data[0].idResearcher)
+                            enableInsertButton(idInput);
+                        }else{
+                            console.log("Sorry, there are not any coincidence");
+                            showError(idInput, "Sorry, there are not any coincidence");
+                        }
+                        
                     }, function(response){
-                        console.log("Sorry, there are not any coincidence");
-                        showError(idInput, "Sorry, there are not any coincidence");
+                        console.log("There was an error");
+                        showError(idInput, "There was a server error. Please, try it later");
                     })
             }
             
+            function getFragmentFromInput(idInput){
+                var res = "";
+                switch(idInput){
+                    case "leader":
+                        res = $scope.grantInputLeader;
+                        break;
+                    case "teamMember":
+                        res = $scope.grantInputTeamMember;
+                        break;
+                    default:
+                        break;
+                }
+                return res;
+            }
+        
             function insertResultInInput(idInput, text){
                 switch(idInput){
                     case "leader":
@@ -167,10 +190,11 @@ angular.module("GrantManagerApp")
             function saveUrlTemporally(idInput, url){
                 switch(idInput){
                     case "leader":
-                        console.log(url);
+                        console.log("leader: " + url);
                         urlLeader = url;
                         break;
                     case "teamMember":
+                        console.log("teammember: " + url);
                         urlTeamMember = url;
                         break;
                     default:

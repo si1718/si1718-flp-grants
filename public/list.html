@@ -18,9 +18,9 @@
             <tr ng-repeat="grant in grants" ng-click="showGrant(grant)">
                 <td>{{grant.reference}}</td>
                 <td>{{grant.title}}</td>
-                <td>{{grant.leaders[0]}}</td>
+                <td>{{grant.leadersName[0]}}</td>
                 <td>{{grant.startDate}}</td>
-                <td>{{grant.teamMembers.length}}</td>
+                <td>{{grant.teamMembersName.length}}</td>
             </tr>
         </tbody>
     </table>

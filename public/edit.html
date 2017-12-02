@@ -10,8 +10,8 @@
     <div class="input-field" style="padding: 15px 0">
         <h6>Leaders</h6>
         <ul id="leadersContainer" class="collection" >
-            <li class="collection-item" ng-repeat="leader in updatedGrant.leadersName track by $index">
-                <div><b>Leader {{$index + 1}}:</b> {{leader}}
+            <li class="collection-item" ng-repeat="leaderName in updatedGrant.leadersName track by $index">
+                <div><b>Leader {{$index + 1}}:</b> {{leaderName}}
                     <a class="secondary-content" ng-click="deleteAttributeItem('leader', $index)">
                     <i style="cursor:pointer; color:red" class="material-icons">clear</i></a>
                 </div>
@@ -22,7 +22,7 @@
             <label for="grantInputLeader">New leader:</label>
             <input type="text" id="grantInputLeader" ng-model="grantInputLeader" ng-disabled="validResearchersApiResponseForLeaderSearch">
             <a class="waves-effect waves-light btn green" ng-click="checkResearcher('leader')" ng-show="enoughLettersInLeaderSearch()" ><i class="material-icons left">add_circle</i>Check</a>
-            <p ng-model="errorInLeaderSearch"></p>
+            <label ng-model="errorInLeaderSearch"></label>
             <a class="waves-effect waves-light btn green" ng-click="addAttributeItem('leader')" ng-show="validResearchersApiResponseForLeaderSearch"><i class="material-icons left">add_circle</i>Add</a>
         </div>
     </div>
@@ -63,8 +63,8 @@
     <div class="input-field" style="padding: 15px 0">
         <h6>Team members:</h6>
         <ul id="teamMembersContainer" class="collection">
-            <li class="collection-item" ng-repeat="teamMember in updatedGrant.teamMembersName track by $index">
-                <div><b>Team member {{$index + 1}}:</b>{{teamMember}} 
+            <li class="collection-item" ng-repeat="teamMemberName in updatedGrant.teamMembersName track by $index">
+                <div><b>Team member {{$index + 1}}:</b>{{teamMemberName}} 
                     <a class="secondary-content" ng-click="deleteAttributeItem('teamMember', $index)">
                     <i style="cursor:pointer; color:red" class="material-icons">clear</i></a>
                 </div>
@@ -75,7 +75,7 @@
             <label for="grantInputTeamMember">New team member</label>
             <input type="text" id="grantInputTeamMember" ng-model="grantInputTeamMember" ng-disabled="validResearchersApiResponseForTeamMemberSearch">
             <a class="waves-effect waves-light btn green" ng-click="checkResearcher('teamMember')" ng-show="enoughLettersInTeamMemberSearch()"><i class="material-icons left">add_circle</i>Check</a>
-            <p ng-model="errorInTeamMemberSearch"></p>
+            <label ng-model="errorInTeamMemberSearch"></label>
             <a class="waves-effect waves-light btn green" ng-click="addAttributeItem('teamMember')" ng-show="validResearchersApiResponseForTeamMemberSearch"><i class="material-icons left">add_circle</i>Add</a>
         </div>
     </div>

@@ -42,12 +42,12 @@ angular.module("GrantManagerApp")
         $scope.showGrant = function(grant){
             document.getElementById("title").innerHTML = grant.title;
             document.getElementById("reference").innerHTML = "<b>Reference: </b>" + grant.reference;
-            document.getElementById("leaders").innerHTML = getResourceList(grant.leaders);
+            document.getElementById("leaders").innerHTML = getResourceList(grant.leadersName);
             document.getElementById("grantType").innerHTML = "<b>Grant type: </b>" + grant.type;
             document.getElementById("startDate").innerHTML = "<b>Start date: </b>" + grant.startDate;
             document.getElementById("endDate").innerHTML = "<b>End date: </b>" + grant.endDate;
             document.getElementById("fundingOrganizations").innerHTML = getResourceList(grant.fundingOrganizations);
-            document.getElementById("teamMembers").innerHTML = getResourceList(grant.teamMembers);
+            document.getElementById("teamMembers").innerHTML = getResourceList(grant.teamMembersName);
             $scope.isGrantInfoDisplayed=true;
             $scope.idGrant=grant.idGrant;
         }
