@@ -5,12 +5,10 @@ var helmet = require("helmet");
 var path = require("path");
 var cors = require("cors");
 
-
 var mdbURL = "mongodb://curro:curro@ds149855.mlab.com:49855/si1718-flp-grants";
 
 var BASE_API_PATH = "/api/v1"
 
-var grants = [];
 
 var port = (process.env.PORT || 10000);
 
@@ -153,6 +151,7 @@ app.post(BASE_API_PATH + '/grants', function(req, res) {
         else {
             var idGrant = newGrant.reference.replace("/","-").toLowerCase();
             newGrant.idGrant = idGrant;
+            newGrant.viewURL = "https://si1718-flp-grants.herokuapp.com/#!/viewgrant/" + idGrant;
             db.findOne({ "idGrant": idGrant }, function(err, element) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
@@ -283,3 +282,4 @@ app.delete(BASE_API_PATH + "/grants/:idGrant", function (request, response) {
         });
     }
 });
+

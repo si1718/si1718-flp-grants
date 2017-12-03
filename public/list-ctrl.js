@@ -67,6 +67,10 @@ angular.module("GrantManagerApp")
         $scope.createGrant = function(){
             $location.path("/create");
         }
+        
+        $scope.extendedView = function(){
+            $location.path("/grantview/" + $scope.idGrant);
+        }
 
         refresh();
         

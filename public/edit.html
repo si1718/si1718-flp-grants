@@ -80,6 +80,25 @@
         </div>
     </div>
     
+    <div class="input-field" style="padding: 15px 0">
+        <h6>Keywords:</h6>
+        <ul id="keywordsContainer" class="collection" >
+            <li class="collection-item" ng-repeat="keyword in updatedGrant.keywords track by $index">
+                <div><b>Keyword {{$index + 1}}:</b> {{keyword}}
+                    <a class="secondary-content" ng-click="deleteAttributeItem('keyword', $index)">
+                    <i style="cursor:pointer; color:red" class="material-icons">clear</i></a>
+                </div>
+            </li>
+        </ul>
+    
+        <div class="input-field">
+            <label for="grantInputKeyword">New funding organization:</label>
+            <input type="text" id="grantInputKeyword" ng-model="grantInputKeyword">
+            <a class="waves-effect waves-light btn green" ng-click="addAttributeItem('keyword')" ng-show="validLengthForKeyword()"><i class="material-icons left">add_circle</i>Add</a>
+        </div>
+    </div>
+    
+    
     <button class="btn red" ng-click="cancelGrantEdition()">Cancel</button>
     <button type="submit" class="btn blue" ng-click="commitGrantEdition()">Update</button>
     

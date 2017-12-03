@@ -1,0 +1,22 @@
+<h2 id ="title" style="font-weight: bold">Grant view: Unknown</h2>
+
+<h3 ng-show="!grantExists">Grant not found</h3>
+
+
+<div id="grantInfo" style="background:WhiteSmoke; padding:2px; margin:20px 0" ng-show="grantExists">
+    <p id="reference"></p>
+    <p id="leadersTitle"><b>Leaders:</b></p>
+    <ul id="leaders"></ul>
+    <p id="grantType"> </p>
+    <p id="startDate"></p>
+    <p id="endDate"></p>
+    <p id="fundingOrganizationsTitle"><b>Funding Organizations:</b></p>
+    <ul id="fundingOrganizations"></ul>
+    <p id="teamTitle"><b>Team:</b></p>
+    <ul id="teamMembers"></ul>
+</div>
+
+
+<div id="grantOptions" style="padding:3px; text-align:right" ng-show="grantExists">
+    <button class="btn btn-primary" ng-click="cancelGrantEdition()">Back</button></button>
+</div>

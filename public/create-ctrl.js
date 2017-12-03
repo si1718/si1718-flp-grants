@@ -8,11 +8,13 @@ angular.module("GrantManagerApp")
         $scope.newGrant.leaders = [];
         $scope.newGrant.fundingOrganizations = [];
         $scope.newGrant.teamMembers = [];
+        $scope.newGrant.keywords = [];
         
         // Input for array attributes
         $scope.grantInputLeader = "";
         $scope.grantInputFundingOrganization = "";
         $scope.grantInputTeamMember = "";
+        $scope.grantInputKeyword = "";
         
         // Urls for researchers
         var urlLeader = "";
@@ -20,6 +22,7 @@ angular.module("GrantManagerApp")
         
         // Check enough length in attribute item 
         $scope.validLengthForFundingOrganization = function(){return $scope.grantInputFundingOrganization.length >=4;};
+        $scope.validLengthForKeyword = function(){return $scope.grantInputKeyword.length >=4;};
         
         // Search variables
         $scope.enoughLettersInLeaderSearch = function(){return $scope.grantInputLeader.length >=3;};
@@ -62,6 +65,10 @@ angular.module("GrantManagerApp")
                     $scope.validResearchersApiResponseForTeamMemberSearch = false;
                     console.log($scope.newGrant.teamMembersName.length)
                     break;
+                case "keyword":
+                    $scope.newGrant.keywords.push($scope.grantInputKeyword);
+                    $scope.grantInputKeyword = "";
+                    break;
                 default:
                     break;
             }
@@ -80,6 +87,9 @@ angular.module("GrantManagerApp")
                     case "teamMember":
                         $scope.newGrant.teamMembers.splice(index,1);
                         $scope.newGrant.teamMembersName.splice(index,1);
+                        break;
+                    case "keyword":
+                        $scope.newGrant.keywords.splice(index,1);
                         break;
                 default:
                     break;
