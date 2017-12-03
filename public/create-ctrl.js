@@ -35,7 +35,7 @@ angular.module("GrantManagerApp")
         console.log("CreateCtrl initialized");
             
         $scope.cancelGrantCreation = function(){
-            $location.path("/list");
+            $location.path("/");
         };
         
         $scope.addAttributeItem = function(attribute){

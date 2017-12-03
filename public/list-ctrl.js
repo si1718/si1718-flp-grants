@@ -8,7 +8,11 @@ angular.module("GrantManagerApp")
         var queryValue = $location.search()[queryParam];
         
         console.log(queryValue);
-        
+            
+        $scope.back = function() {
+            $location.path("/");
+        };
+            
         function refresh(){
             var apiGetRequest = "/api/v1/grants";
             if(queryParam)

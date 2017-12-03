@@ -8,8 +8,8 @@ angular.module("GrantManagerApp")
             $scope.idGrant = $routeParams.idGrant;
             $scope.grantExists = true;
 
-            $scope.cancelGrantEdition = function() {
-                $location.path("/search");
+            $scope.back = function() {
+                $location.path("/");
             };
             
             function getResourceList(resource){

@@ -25,7 +25,10 @@
         </tbody>
     </table>
     
-    <button class="btn btn-primary" id="createGrant" ng-click="createGrant()">New</button>
+    <div style="padding:3px; text-align:right">
+        <button class="btn btn-primary" ng-click="back()">Back</button></button>
+        <button class="btn btn-primary" id="createGrant" ng-click="createGrant()">New</button>
+    </div>
     
     <div id="grantInfo" style="background:WhiteSmoke; padding:2px; margin:20px 0" ng-show="isGrantInfoDisplayed">
         <h4 class="h4" id ="title" style="font-weight: bold"></h4>

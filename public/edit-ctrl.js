@@ -43,7 +43,7 @@ angular.module("GrantManagerApp")
                 );
 
             $scope.cancelGrantEdition = function() {
-                $location.path("/list");
+                $location.path("/");
             };
 
             $scope.addAttributeItem = function(attribute) {
