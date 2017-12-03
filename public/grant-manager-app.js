@@ -134,7 +134,7 @@ angular.module("GrantManagerApp", ["ngRoute"])
             }).when("/grantschart", {
                 templateUrl: "basic-grant-chart.html",
                 controller: "DepartmentsChartCtrl"
-            }).when("/grantview/:idGrant",{
+            }).when("/viewgrant/:idGrant",{
                 templateUrl: "extended-view.html",
                 controller: "ExtendedViewCtrl"
             });

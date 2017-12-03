@@ -69,7 +69,7 @@ angular.module("GrantManagerApp")
         }
         
         $scope.extendedView = function(){
-            $location.path("/grantview/" + $scope.idGrant);
+            $location.path("/viewgrant/" + $scope.idGrant);
         }
 
         refresh();
