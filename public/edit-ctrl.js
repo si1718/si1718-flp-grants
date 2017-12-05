@@ -165,7 +165,7 @@ angular.module("GrantManagerApp")
 
             $scope.checkResearcher = function(idInput) {
                 var searchFragment = getFragmentFromInput(idInput);
-                var apiCallQuery = researchersUrlBase + apiGetResearch + "?search=" + searchFragment;
+                var apiCallQuery = researchersUrlBase + apiGetResearch +"?search=" + searchFragment;
                 console.log(apiCallQuery);
                 $http
                     .get(apiCallQuery)
@@ -176,7 +176,7 @@ angular.module("GrantManagerApp")
                             insertResultInInput(idInput, response.data[0].name);
                             saveUrlsTemporally(idInput, 
                                 researchersUrlBase + apiGetResearch + "/" + response.data[0].idResearcher, 
-                                researchersUrlBase + guiUrlResearch + "/" + response.data[0].idResearcher + "/view");
+                                response.data[0].viewURL);
                             enableInsertButton(idInput);
                         }
                         else {

@@ -36,11 +36,13 @@ angular.module("GrantManagerApp")
         
         function getResourceList(resource, urlView){
             var res = "";
-            
+            console.log("hskjdahkasjhdkjahd" + urlView);
             for(var i=0; i< resource.length; i++){
                 res = res + "<li>";
-                if(urlView !== undefined && urlView.length > 10){
-                    res  = res + "<a href='" + urlView +  "'>" + resource[i] + "</a>";
+                if(urlView !== undefined){
+                    res  = res + "<a href='" + urlView[i] +  "'>" + resource[i] + "</a>";
+                    console.log(res);
+
                 }else{
                     res = res + resource[i];
                 }

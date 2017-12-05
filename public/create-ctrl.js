@@ -157,7 +157,7 @@ angular.module("GrantManagerApp")
 
             $scope.checkResearcher = function(idInput) {
                 var searchFragment = getFragmentFromInput(idInput);
-                var apiCallQuery = researchersUrlBase + "?search=" + searchFragment;
+                var apiCallQuery = researchersUrlBase + apiGetResearch +"?search=" + searchFragment;
                 console.log(apiCallQuery);
                 $http
                     .get(apiCallQuery)
