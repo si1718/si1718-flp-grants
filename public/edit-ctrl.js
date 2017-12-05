@@ -2,8 +2,9 @@ angular.module("GrantManagerApp")
     .controller("EditCtrl", ["$scope", "$http", "$routeParams", "$location",
         function($scope, $http, $routeParams, $location) {
 
-            var researchersUrlBase = "https://si1718-dfr-researchers.herokuapp.com/api/v1/researchers";
-
+            var researchersUrlBase = "https://si1718-dfr-researchers.herokuapp.com";
+            var apiGetResearch = "/api/v1/researchers";
+            var guiUrlResearch = "/#!/researchers";
             $scope.idGrant = $routeParams.idGrant;
             $scope.grantExists = true;
 
@@ -15,7 +16,9 @@ angular.module("GrantManagerApp")
 
             // Urls for researchers
             var urlLeader = "";
+            var urlViewLeader = "";
             var urlTeamMember = "";
+            var urlViewTeamMember = "";
 
             // Check enough length in attribute item 
             $scope.validLengthForFundingOrganization = function() { return $scope.grantInputFundingOrganization.length >= 4; };
@@ -51,11 +54,16 @@ angular.module("GrantManagerApp")
                 switch (attribute) {
                     case "leader":
                         $scope.updatedGrant.leaders.push(urlLeader);
-                        if ($scope.updatedGrant.leadersName !== undefined)
+                        if ($scope.updatedGrant.leadersName !== undefined){
                             $scope.updatedGrant.leadersName.push($scope.grantInputLeader);
-                        else
+                        }else{
                             $scope.updatedGrant.leadersName = [$scope.grantInputLeader];
-
+                        }
+                        if ($scope.updatedGrant.leadersViewURL !== undefined){
+                            $scope.updatedGrant.leadersViewURL.push(urlViewLeader);
+                        }else{
+                            $scope.updatedGrant.leadersViewURL = [urlViewLeader];
+                        }
                         $scope.grantInputLeader = "";
                         $scope.validResearchersApiResponseForLeaderSearch = false;
                         break;
@@ -65,10 +73,16 @@ angular.module("GrantManagerApp")
                         break;
                     case "teamMember":
                         $scope.updatedGrant.teamMembers.push(urlTeamMember);
-                        if ($scope.updatedGrant.teamMembersName !== undefined)
+                        if ($scope.updatedGrant.teamMembersName !== undefined){
                             $scope.updatedGrant.teamMembersName.push($scope.grantInputTeamMember);
-                        else
+                        }else{
                             $scope.updatedGrant.teamMembersName = [$scope.grantInputTeamMember];
+                        }
+                        if ($scope.updatedGrant.teamMembersViewURL !== undefined){
+                            $scope.updatedGrant.teamMembersViewURL.push(urlViewTeamMember);
+                        }else{
+                            $scope.updatedGrant.teamMembersViewURL = [urlViewTeamMember];
+                        }
                         $scope.grantInputTeamMember = "";
                         $scope.validResearchersApiResponseForTeamMemberSearch = false;
                         break;
@@ -151,7 +165,7 @@ angular.module("GrantManagerApp")
 
             $scope.checkResearcher = function(idInput) {
                 var searchFragment = getFragmentFromInput(idInput);
-                var apiCallQuery = researchersUrlBase + "?search=" + searchFragment;
+                var apiCallQuery = researchersUrlBase + apiGetResearch + "?search=" + searchFragment;
                 console.log(apiCallQuery);
                 $http
                     .get(apiCallQuery)
@@ -160,7 +174,9 @@ angular.module("GrantManagerApp")
                             console.log("The first research output is: " + response.data[0].orcid);
                             showError(idInput, "");
                             insertResultInInput(idInput, response.data[0].name);
-                            saveUrlTemporally(idInput, researchersUrlBase + "/" + response.data[0].idResearcher)
+                            saveUrlsTemporally(idInput, 
+                                researchersUrlBase + apiGetResearch + "/" + response.data[0].idResearcher, 
+                                researchersUrlBase + guiUrlResearch + "/" + response.data[0].idResearcher + "/view");
                             enableInsertButton(idInput);
                         }
                         else {
@@ -203,15 +219,18 @@ angular.module("GrantManagerApp")
                 }
             }
 
-            function saveUrlTemporally(idInput, url) {
+            function saveUrlsTemporally(idInput, url, urlView) {
                 switch (idInput) {
                     case "leader":
                         console.log("leader: " + url);
+                        console.log("leaderView: " + urlView);
                         urlLeader = url;
+                        urlViewLeader = urlView;
                         break;
                     case "teamMember":
                         console.log("teammember: " + url);
                         urlTeamMember = url;
+                        urlViewTeamMember = urlView;
                         break;
                     default:
                         break;

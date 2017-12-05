@@ -34,24 +34,31 @@ angular.module("GrantManagerApp")
             $scope.grantId="";
         }
         
-        function getResourceList(resource){
+        function getResourceList(resource, urlView){
             var res = "";
             
             for(var i=0; i< resource.length; i++){
-                res = res + "<li>" + resource[i] + "</li>";
+                res = res + "<li>";
+                if(urlView !== undefined && urlView.length > 10){
+                    res  = res + "<a href='" + urlView +  "'>" + resource[i] + "</a>";
+                }else{
+                    res = res + resource[i];
+                }
+                res = res + "</li>";
             }
+            console.log(res);
             return res;
         }
         
         $scope.showGrant = function(grant){
             document.getElementById("title").innerHTML = grant.title;
             document.getElementById("reference").innerHTML = "<b>Reference: </b>" + grant.reference;
-            document.getElementById("leaders").innerHTML = getResourceList(grant.leadersName);
+            document.getElementById("leaders").innerHTML = getResourceList(grant.leadersName, grant.leadersViewURL);
             document.getElementById("grantType").innerHTML = "<b>Grant type: </b>" + grant.type;
             document.getElementById("startDate").innerHTML = "<b>Start date: </b>" + grant.startDate;
             document.getElementById("endDate").innerHTML = "<b>End date: </b>" + grant.endDate;
             document.getElementById("fundingOrganizations").innerHTML = getResourceList(grant.fundingOrganizations);
-            document.getElementById("teamMembers").innerHTML = getResourceList(grant.teamMembersName);
+            document.getElementById("teamMembers").innerHTML = getResourceList(grant.teamMembersName, grant.teamMembersViewURL);
             $scope.isGrantInfoDisplayed=true;
             $scope.idGrant=grant.idGrant;
         }

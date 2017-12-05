@@ -137,6 +137,9 @@ angular.module("GrantManagerApp", ["ngRoute"])
             }).when("/viewgrant/:idGrant",{
                 templateUrl: "extended-view.html",
                 controller: "ExtendedViewCtrl"
+            }).when("/auth0",{
+                templateUrl: "auth0.html",
+                controller: "Auth0Ctrl"
             });
         console.log("App Initialized");
     });
