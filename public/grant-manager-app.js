@@ -1,4 +1,4 @@
-angular.module("GrantManagerApp", ["ngRoute"])
+angular.module("GrantManagerApp", ["ngRoute", "ngAnimate", "ui.bootstrap"])
     .config(function ($routeProvider){
         
     /////////////////////////////////// HIGHCHART THEME START ///////////////////////////////////////////////////
@@ -140,6 +140,9 @@ angular.module("GrantManagerApp", ["ngRoute"])
             }).when("/auth0",{
                 templateUrl: "auth0.html",
                 controller: "Auth0Ctrl"
+            }).when("/testpagination",{
+                templateUrl: "test-pagination.html",
+                controller: "PaginationDemoCtrl"
             });
         console.log("App Initialized");
     });

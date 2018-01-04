@@ -1,22 +1,45 @@
 angular.module("GrantManagerApp")
-    .controller("ListCtrl", ["$scope", "$http", "$location", "$routeParams",function($scope, $http, $location, $routeParams){
+    .controller("ListCtrl", ["$scope", "$http", "$location", "$routeParams", "$log",function($scope, $http, $location, $routeParams, $log){
         
         $scope.grantExists = true;
+        $scope.limit = 5;
+        $scope.maxPagesLinksView = 5;
+        
+        $scope.page = 1;
+        $scope.totalItems = 0;
+        
+        function extractCount(){
+            var apiCountRequest = "/api/v1/resultsCount"
+            if(queryParam)
+                apiCountRequest = apiCountRequest + "?" + queryParam + "=" + queryValue;
+            $http
+                .get(apiCountRequest)
+                .then(function(count) {
+                    $scope.totalItems = count.data.total;
+                }, function(error) {
+                    $scope.errorMessage = "An unexpected error has ocurred.";
+                    $scope.paginationError = true;
+                });
+        }
         
         var queryParam = Object.keys($location.search())[0];
         console.log(queryParam);
         var queryValue = $location.search()[queryParam];
         
         console.log(queryValue);
-            
+        
+        
         $scope.back = function() {
             $location.path("/");
         };
             
         function refresh(){
-            var apiGetRequest = "/api/v1/grants";
+            console.log("Refresh called");
+            console.log("Page number: " + $scope.page);
+            var apiGetRequest = "/api/v1/grants?limit=" + $scope.limit + "&skip=" + (($scope.page-1)*$scope.limit);
             if(queryParam)
-                apiGetRequest = apiGetRequest + "?"+ queryParam + "=" + queryValue;
+                apiGetRequest = apiGetRequest + "&"+ queryParam + "=" + queryValue;
+            
             $http
                 .get(apiGetRequest)
                 .then(
@@ -36,7 +59,7 @@ angular.module("GrantManagerApp")
         
         function getResourceList(resource, urlView){
             var res = "";
-            console.log("hskjdahkasjhdkjahd" + urlView);
+            
             for(var i=0; i< resource.length; i++){
                 res = res + "<li>";
                 if(urlView !== undefined){
@@ -84,7 +107,13 @@ angular.module("GrantManagerApp")
         $scope.extendedView = function(){
             $location.path("/viewgrant/" + $scope.idGrant);
         }
-
+        
+        
+        $scope.pageChanged = function(){
+            refresh();
+        }
+        
+        extractCount()
         refresh();
         
 }]);

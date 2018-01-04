@@ -51,7 +51,7 @@ app.get(BASE_API_PATH + '/grants', function(req, response) {
                 response.sendStatus(500); // internal server error
             }
             else {
-                console.log("INFO: Sending grants: " + JSON.stringify(grants, 2, null));
+                //console.log("INFO: Sending grants: " + JSON.stringify(grants, 2, null));
                 response.send(grants);
             }
         });
@@ -61,33 +61,35 @@ app.get(BASE_API_PATH + '/grants', function(req, response) {
         var hasParam = true;
 
         if (req.query.title) {
-            query = { 'title': { '$regex': '.*' + req.query.title + '.*' } }
+            query = { 'title': { '$regex': '.*' + req.query.title + '.*', "$options":"i" } }
         }
         else if (req.query.reference) {
-            query = { 'reference': { '$regex': '.*' + req.query.reference + '.*' } }
+            query = { 'reference': { '$regex': '.*' + req.query.reference + '.*', "$options":"i" } }
         }
         else if (req.query.startDate) {
-            query = { 'startDate': { '$regex': '.*' + req.query.startDate + '.*' } }
+            query = { 'startDate': { '$regex': '.*' + req.query.startDate + '.*', "$options":"i" } }
         }
         else if (req.query.endDate) {
-            query = { 'endDate': { '$regex': '.*' + req.query.endDate + '.*' } }
+            query = { 'endDate': { '$regex': '.*' + req.query.endDate + '.*', "$options":"i" } }
         }
         else if (req.query.type) {
-            query = { 'type': { '$regex': '.*' + req.query.type + '.*' } }
+            query = { 'type': { '$regex': '.*' + req.query.type + '.*', "$options":"i" } }
         }
         else if (req.query.fundingOrganizations) {
-            query = { 'fundingOrganizations': { '$regex': '.*' + req.query.fundingOrganizations + '.*' } }
+            query = { 'fundingOrganizations': { '$regex': '.*' + req.query.fundingOrganizations + '.*', "$options":"i" } }
         }
         else if (req.query.leaders) {
-            query = { 'leaders': { '$regex': '.*' + req.query.leaders + '.*' } }
+            query = { 'leaders': { '$regex': '.*' + req.query.leaders + '.*', "$options":"i" } }
         }
         else if (req.query.teamMembers) {
-            query = { 'teamMembers': { '$regex': '.*' + req.query.teamMembers + '.*' } }
+            query = { 'teamMembers': { '$regex': '.*' + req.query.teamMembers + '.*', "$options":"i" } }
         }
-        else {
+        else if(req.query.skip || req.query.limit){
+            query = {};
+        } else{
             hasParam = false;
         }
-
+        
 
         if (!hasParam) {
             console.log("WARNING: New GET request to /grants/:idGrant without idGrant, sending 400...");
@@ -97,8 +99,28 @@ app.get(BASE_API_PATH + '/grants', function(req, response) {
             console.log("INFO: New GET request to /grants/");
 
             console.log(query);
-
-            db.find(query).toArray(function(err, grants) {
+            
+            var skipQuantity = req.query.skip;
+            var limitQuantity = req.query.limit;
+            if(!skipQuantity){
+                skipQuantity = 0;
+            }else{
+                skipQuantity = parseInt(skipQuantity);
+                if(isNaN(skipQuantity)){
+                    skipQuantity = 0;
+                }
+            }
+            if(!limitQuantity){
+                limitQuantity = 10;
+            }else{
+                limitQuantity = parseInt(limitQuantity);
+                if(isNaN(limitQuantity)){
+                    limitQuantity = 10;
+                }
+                    
+            }
+            
+            db.find(query, {skip: skipQuantity, limit: limitQuantity}).toArray(function(err, grants) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
@@ -106,8 +128,86 @@ app.get(BASE_API_PATH + '/grants', function(req, response) {
                 else {
 
                     if (grants) {
-                        console.log("INFO: Sending contact: " + JSON.stringify(grants, 2, null));
+                        //console.log("INFO: Sending contact: " + JSON.stringify(grants, 2, null));
                         response.send(grants);
+                    }
+                    else {
+                        console.log("WARNING: There are not any match grant");
+                        response.sendStatus(404); // not found
+                    }
+                }
+            });
+        }
+    }
+
+});
+
+//Get number of results
+app.get(BASE_API_PATH + "/resultsCount", function(req, response) {
+    console.log("INFO: New GET request to /grants");
+    if (!Object.keys(req.query).length) {
+        db.find({}).count(function(err, result) {
+            if (err) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            }
+            else {
+                //console.log("INFO: Sending grants: " + JSON.stringify(grants, 2, null));
+                response.send({"total" : result});
+            }
+        });
+    }
+    else {
+        var query;
+        var hasParam = true;
+
+        if (req.query.title) {
+            query = { 'title': { '$regex': '.*' + req.query.title + '.*', "$options":"i" } }
+        }
+        else if (req.query.reference) {
+            query = { 'reference': { '$regex': '.*' + req.query.reference + '.*', "$options":"i" } }
+        }
+        else if (req.query.startDate) {
+            query = { 'startDate': { '$regex': '.*' + req.query.startDate + '.*', "$options":"i" } }
+        }
+        else if (req.query.endDate) {
+            query = { 'endDate': { '$regex': '.*' + req.query.endDate + '.*', "$options":"i" } }
+        }
+        else if (req.query.type) {
+            query = { 'type': { '$regex': '.*' + req.query.type + '.*', "$options":"i" } }
+        }
+        else if (req.query.fundingOrganizations) {
+            query = { 'fundingOrganizations': { '$regex': '.*' + req.query.fundingOrganizations + '.*', "$options":"i" } }
+        }
+        else if (req.query.leaders) {
+            query = { 'leaders': { '$regex': '.*' + req.query.leaders + '.*', "$options":"i" } }
+        }
+        else if (req.query.teamMembers) {
+            query = { 'teamMembers': { '$regex': '.*' + req.query.teamMembers + '.*', "$options":"i" } }
+        }
+        else {
+            hasParam = false;
+        }
+        
+
+        if (!hasParam) {
+            console.log("WARNING: New GET request to /grants/:idGrant without idGrant, sending 400...");
+            response.sendStatus(400); // bad request
+        }
+        else {
+            console.log("INFO: New GET request to /grants/");
+
+            console.log(query);
+            
+            db.find(query).count(function(err, result) {
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    response.sendStatus(500); // internal server error
+                }
+                else {
+
+                    if (result) {
+                        response.send({"total" : result});
                     }
                     else {
                         console.log("WARNING: There are not any match grant");
@@ -439,3 +539,4 @@ app.get(BASE_API_PATH2 + '/grants', jwtCheck, function(req, response) {
     }
 
 });
+
