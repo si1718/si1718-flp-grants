@@ -30,7 +30,7 @@ angular.module("GrantManagerApp")
         
         
         $scope.back = function() {
-            $location.path("/");
+            $location.path("/").search({});
         };
             
         function refresh(){
@@ -97,15 +97,15 @@ angular.module("GrantManagerApp")
         }
         
         $scope.editGrant = function(){
-            $location.path("/grant/"+$scope.idGrant);
+            $location.path("/grant/"+$scope.idGrant).search({});
         }
         
         $scope.createGrant = function(){
-            $location.path("/create");
+            $location.path("/create").search({});
         }
         
         $scope.extendedView = function(){
-            $location.path("/viewgrant/" + $scope.idGrant);
+            $location.path("/viewgrant/" + $scope.idGrant).search({});
         }
         
         

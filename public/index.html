@@ -13,15 +13,15 @@
 
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
-    
+
     <!-- Icons-->
-    
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="vendor/css/full-width-pics.css" rel="stylesheet">
     <link href="vendor/css/custom-bootstrap.css" rel="stylesheet">
-    
+
     <!-- Angular-bootstrap -->
     <link rel="stylesheet" href="/bower_components/angular-bootstrap/ui-bootstrap-csp.css" type="text/css" />
 
@@ -52,32 +52,46 @@
     <script src="/bower_components/highcharts/modules/funnel.js"></script>
 
     <script type="text/javascript" src="grant-manager-app.js"></script>
-    <script type="text/javascript" src="search-ctrl.js"></script>
-    <script type="text/javascript" src="about-ctrl.js"></script>
-    <script type="text/javascript" src="list-ctrl.js"></script>
-    <script type="text/javascript" src="edit-ctrl.js"></script>
-    <script type="text/javascript" src="create-ctrl.js"></script>
-    <script type="text/javascript" src="extended-view-ctrl.js"></script>
-    <script type="text/javascript" src="charts-ctrl.js"></script>
-    <script type="text/javascript" src="researchers-chart-integration-ctrl.js"></script>
-    <script type="text/javascript" src="basic-grant-chart-ctrl.js"></script>
-    <script type="text/javascript" src="auth0-ctrl.js"></script>
-    
-    <script type="text/javascript" src="test-pagination-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/search-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/about-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/list-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/edit-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/create-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/extended-view-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/charts-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/researchers-chart-integration-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/basic-grant-chart-ctrl.js"></script>
+
+    <script type="text/javascript" src="controllers/secure-controllers/search-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/secure-controllers/list-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/secure-controllers/edit-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/secure-controllers/create-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/secure-controllers/extended-view-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/secure-controllers/charts-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/secure-controllers/researchers-chart-integration-ctrl.js"></script>
+    <script type="text/javascript" src="controllers/secure-controllers/basic-grant-chart-ctrl.js"></script>
+
+    <script type="text/javascript" src="/bower_components/auth0-lock/build/lock.min.js"></script>
+
 
 </head>
 
 <body>
-<style type="text/css">
-    .green{
-        color:white;
-        background-color:green;
-    }
-    .red{
-        color: white;
-        background-color:red;
-    }
-</style>
+    <style type="text/css">
+        .green {
+            color: white;
+            background-color: green;
+        }
+
+        .red {
+            color: white;
+            background-color: red;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top navbar-red" role="navigation">
         <div class="container">
@@ -89,19 +103,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Grants</a>
+                <a class="navbar-brand">Grants</a>
+                <!-- User info-->
+                <div>
+                    <dt style="display:inline-block;font-size:12px;color:white" id="user-nick">Anonymous.</dt>
+                    <button id="login-access" class="btn btn-link btn-xs">Log In</button>
+                </div>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#!">Search</a></li>
-                        <li><a href="#!/create">New grant</a></li>
-                        <li><a href="#!/charts">Charts</a></li>
-                        <li><a href="#!/about">About</a></li>
-                        <li><a href="#!/auth0">Login</a> </li>
-                    
+                    <li><a id="searchLink" href="#!">Search</a></li>
+                    <li><a id="createLink" href="#!/create">New grant</a></li>
+                    <li><a id="chartsLink" href="#!/charts">Charts</a></li>
+                    <li><a href="#!/about">About</a></li>
+                    <li><a id="accessLink" id="" id="secure-access" href="#!/secure">Vip</a></li>
                 </ul>
             </div>
+
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
@@ -140,6 +159,122 @@
         </div>
         <!-- /.container -->
     </footer>
+    <script>
+        var clientId = 'cQBY4qKdXavDq0toUpsnlcWH5l3UkHG2';
+        var domain = 'flunaperejon.eu.auth0.com';
+
+        var lock = new Auth0Lock(
+            clientId,
+            domain
+        );
+
+        function refresh() {
+            if (localStorage.getItem('logged') == "true") {
+                var userProfile = localStorage.getItem('profile')
+                console.info("Entra en asignacion de userProfile porque logged es: " + localStorage.getItem('logged'));
+                document.getElementById('user-nick').textContent = JSON.parse(userProfile).nickname;
+                document.getElementById('login-access').textContent = "Log Out";
+
+                if (localStorage.getItem('inSecurePage') == "true") {
+                    console.info("Cambio a barra modo secure")
+                    document.getElementById('searchLink').href = "#!/secure";
+                    document.getElementById('createLink').href = "#!/secure/create";
+                    document.getElementById('chartsLink').href = "#!/secure/charts";
+                    document.getElementById('accessLink').href = "#!";
+                    document.getElementById('accessLink').text = "Basic";
+                }
+                else {
+                    console.info("Cambio a barra modo basic")
+                    document.getElementById('searchLink').href = "#!";
+                    document.getElementById('createLink').href = "#!/create";
+                    document.getElementById('chartsLink').href = "#!/charts";
+                    document.getElementById('accessLink').href = "#!/secure";
+                    document.getElementById('accessLink').text = "Vip";
+                }
+            }
+            else {
+                document.getElementById('searchLink').href = "#!";
+                document.getElementById('createLink').href = "#!/create";
+                document.getElementById('chartsLink').href = "#!/charts";
+                document.getElementById('accessLink').href = "#!/secure";
+                document.getElementById('accessLink').text = "Vip";
+
+                console.info("No entra en asignacion de userProfile porque logged es: " + localStorage.getItem('logged'));
+
+            }
+        }
+        
+        
+        document.getElementById('login-access').addEventListener('click', function() {
+            if (localStorage.getItem('logged') == "true") {
+                console.info("Entra en el logout");
+                logout();
+            }
+            else {
+                console.info("Entra en el login");
+                login();
+            }
+            
+            refresh();
+        });
+
+        document.getElementById('accessLink').addEventListener('click', function() {
+            if (localStorage.getItem('logged') == "true") {
+                if (localStorage.getItem('inSecurePage') == "true"){
+                    localStorage.setItem('inSecurePage', "false");
+                    console.log("In secure cambiado a false");
+                }else{
+                    localStorage.setItem('inSecurePage', "true");
+                    console.log("In secure cambiado a true");
+                }
+            }
+            else {
+                localStorage.setItem('inSecurePage', "false");
+            }
+            
+            refresh();
+        });
+
+        function login() {
+            lock.show();
+        }
+
+        function logout() {
+            // Reset token
+            localStorage.setItem("accessToken", null);
+            localStorage.setItem("profile", null);
+            localStorage.setItem('logged', "false");
+            //localStorage.setItem('idToken', null);
+
+            lock.logout();
+        }
+
+
+
+        // Listening for the authenticated event
+        lock.on("authenticated", function(authResult) {
+            // Use the token in authResult to getUserInfo() and save it to localStorage
+            lock.getUserInfo(authResult.accessToken, function(error, profile) {
+                if (error) {
+                    // Handle error
+                    return;
+                }
+
+                document.getElementById('user-nick').textContent = profile.nickname;
+
+                localStorage.setItem('accessToken', authResult.idToken);
+                console.info(authResult);
+                localStorage.setItem('profile', JSON.stringify(profile));
+                localStorage.setItem('logged', "true");
+                document.getElementById('login-access').textContent = "Log Out";
+                console.info("El valor de logged es: " + localStorage.getItem('logged'));
+            });
+        });
+        
+        
+        refresh();
+    </script>
+
 
 </body>
 

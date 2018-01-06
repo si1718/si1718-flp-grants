@@ -1,7 +1,7 @@
 angular.module("GrantManagerApp", ["ngRoute", "ngAnimate", "ui.bootstrap"])
-    .config(function ($routeProvider){
-        
-    /////////////////////////////////// HIGHCHART THEME START ///////////////////////////////////////////////////
+    .config(function($routeProvider) {
+
+        /////////////////////////////////// HIGHCHART THEME START ///////////////////////////////////////////////////
 
         /**
          * (c) 2010-2017 Torstein Honsi
@@ -105,27 +105,27 @@ angular.module("GrantManagerApp", ["ngRoute", "ngAnimate", "ui.bootstrap"])
             background2: '#E0E0E8'
 
         };
-/////////////////////////////////// HIGHCHART THEME END ///////////////////////////////////////////////////
-        
-        
-        
+        /////////////////////////////////// HIGHCHART THEME END ///////////////////////////////////////////////////
+
+
+
         $routeProvider
-            .when("/",{
+            .when("/", {
                 templateUrl: "search.html",
-                controller : "SearchCtrl"
+                controller: "SearchCtrl"
             }).when("/create", {
                 templateUrl: "create.html",
                 controller: "CreateCtrl"
-            }).when("/grant/:idGrant",{
+            }).when("/grant/:idGrant", {
                 templateUrl: "edit.html",
-                controller : "EditCtrl"
-            }).when("/list",{
-                templateUrl:"list.html",
-                controller:"ListCtrl"
-            }).when("/about",{
-                templateUrl:"about.html",
-                controller:"AboutCtrl"
-            }).when("/charts",{
+                controller: "EditCtrl"
+            }).when("/list", {
+                templateUrl: "list.html",
+                controller: "ListCtrl"
+            }).when("/about", {
+                templateUrl: "about.html",
+                controller: "AboutCtrl"
+            }).when("/charts", {
                 templateUrl: "charts.html",
                 controller: "ChartsCtrl"
             }).when("/researcherschart", {
@@ -134,15 +134,34 @@ angular.module("GrantManagerApp", ["ngRoute", "ngAnimate", "ui.bootstrap"])
             }).when("/grantschart", {
                 templateUrl: "basic-grant-chart.html",
                 controller: "DepartmentsChartCtrl"
-            }).when("/viewgrant/:idGrant",{
+            }).when("/viewgrant/:idGrant", {
                 templateUrl: "extended-view.html",
                 controller: "ExtendedViewCtrl"
-            }).when("/auth0",{
-                templateUrl: "auth0.html",
-                controller: "Auth0Ctrl"
-            }).when("/testpagination",{
-                templateUrl: "test-pagination.html",
-                controller: "PaginationDemoCtrl"
+            }) // Secure
+            .when("/secure", {
+                templateUrl: "search.html",
+                controller: "SecureSearchCtrl"
+            }).when("/secure/create", {
+                templateUrl: "create.html",
+                controller: "SecureCreateCtrl"
+            }).when("/secure/grant/:idGrant", {
+                templateUrl: "edit.html",
+                controller: "EditCtrl"
+            }).when("/secure/list", {
+                templateUrl: "list.html",
+                controller: "SecureListCtrl"
+            }).when("/secure/charts", {
+                templateUrl: "charts-secure.html",
+                controller: "SecureChartsCtrl"
+            }).when("/secure/researcherschart", {
+                templateUrl: "researchers-chart-integration.html",
+                controller: "SecureResearchersChartCtrl"
+            }).when("/secure/grantschart", {
+                templateUrl: "basic-grant-chart.html",
+                controller: "SecureDepartmentsChartCtrl"
+            }).when("/secure/viewgrant/:idGrant", {
+                templateUrl: "extended-view.html",
+                controller: "SecureExtendedViewCtrl"
             });
         console.log("App Initialized");
     });
